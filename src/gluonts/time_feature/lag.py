@@ -28,7 +28,7 @@ def _make_lags(middle: int, delta: int) -> np.ndarray:
 
 
 def get_lags_for_frequency(
-    freq_str: str, lag_ub: int = 1200, num_lags: Optional[int] = None
+    freq_str: str, lag_ub: int = 5500, num_lags: Optional[int] = None
 ) -> List[int]:
     """
     Generates a list of lags that that are appropriate for the given frequency string.
@@ -62,21 +62,39 @@ def get_lags_for_frequency(
         return [
             _make_lags(k * 24 // multiple, 1) for k in range(1, num_cycles + 1)
         ]
-
+    def _make_lags_for_hour_CBH(multiple, num_cycles=5):
+        # We use previous ``num_cycles`` days to generate lags
+        return [
+            _make_lags(k * 7 // multiple, 1) for k in range(1, num_cycles + 1)
+        ]
+    
     def _make_lags_for_day(multiple, num_cycles=4):
         # We use previous ``num_cycles`` weeks to generate lags
         # We use the last month (in addition to 4 weeks) to generate lag.
         return [
             _make_lags(k * 7 // multiple, 1) for k in range(1, num_cycles + 1)
         ] + [_make_lags(30 // multiple, 1)]
-
+    
+    def _make_lags_for_day_CBH(multiple, num_cycles=5):
+        # We use previous ``num_cycles`` weeks to generate lags
+        # We use the last month (in addition to 4 weeks) to generate lag.
+        return [
+            _make_lags(k * 5 // multiple, 1) for k in range(1, num_cycles + 1)
+        ] 
     def _make_lags_for_week(multiple, num_cycles=3):
         # We use previous ``num_cycles`` years to generate lags
         # Additionally, we use previous 4, 8, 12 weeks
         return [
             _make_lags(k * 52 // multiple, 1) for k in range(1, num_cycles + 1)
         ] + [[4 // multiple, 8 // multiple, 12 // multiple]]
-
+    
+    def _make_lags_for_week_CBH(multiple, num_cycles=3):
+        # We use previous ``num_cycles`` years to generate lags
+        # Additionally, we use previous 4, 8, 12 weeks
+        return [
+            _make_lags(k * 52 // multiple, 1) for k in range(1, num_cycles + 1)
+        ] + [[4 // multiple, 8 // multiple, 12 // multiple]]
+    
     def _make_lags_for_month(multiple, num_cycles=3):
         # We use previous ``num_cycles`` years to generate lags
         return [
@@ -102,6 +120,12 @@ def get_lags_for_frequency(
             _make_lags_for_hour(offset.n)
             + _make_lags_for_day(offset.n / 24.0)
             + _make_lags_for_week(offset.n / (24.0 * 7))
+        )
+    elif offset.name == "CBH":
+        lags = (
+            _make_lags_for_hour_CBH(offset.n)
+            + _make_lags_for_day_CBH(offset.n / 7.0)
+            + _make_lags_for_week_CBH(offset.n / (7.0 * 5))
         )
     # minutes
     elif offset.name == "T":
