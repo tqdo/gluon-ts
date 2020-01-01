@@ -174,6 +174,7 @@ class AddTimeFeatures(MapTransformation):
 #         if self._min_time_point is not None:
 #             if self._min_time_point <= start and end <= self._max_time_point:
 #                 return
+        
         if self._min_time_point is None:
             self._min_time_point = start
             #self._max_time_point = end
@@ -402,8 +403,9 @@ class AddTimeFeatures(MapTransformation):
          '2020-09-07',
          '2020-11-26',
          '2020-12-25']
+        end = self._min_time_point +(length/7)* pd.offsets.CustomBusinessDay(holidays=holidays_NYSE) +pd.offsets.Hour(6)
         self.full_date_range = pd.date_range(
-            self._min_time_point, periods=length, freq=pd.offsets.CustomBusinessHour(start='10:00',holidays=holidays_NYSE)
+            self._min_time_point, end=end, freq=pd.offsets.CustomBusinessHour(start='10:00',holidays=holidays_NYSE)
         )[:length]
     
         self._full_range_date_features = (
