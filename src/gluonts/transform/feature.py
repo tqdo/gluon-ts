@@ -405,7 +405,7 @@ class AddTimeFeatures(MapTransformation):
          '2020-12-25']
         end = self._min_time_point +(length/7-1)* pd.offsets.CustomBusinessDay(holidays=holidays_NYSE) +pd.offsets.Hour(6)
         self.full_date_range = pd.date_range(
-            self._min_time_point, end=end, freq=pd.offsets.CustomBusinessHour(start='10:00',holidays=holidays_NYSE)
+            self._min_time_point, end=end, freq=pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE)
         )#[:length]
     
         self._full_range_date_features = (
@@ -426,7 +426,7 @@ class AddTimeFeatures(MapTransformation):
             data[self.target_field], self.pred_length, is_train=is_train
         )
         self._update_cache(start, length)
-        i0 = self._date_index[start]#abc
+        i0 = self._date_index[start]#a
         features = (
             self._full_range_date_features[..., i0 : i0 + length]
             if self.date_features
