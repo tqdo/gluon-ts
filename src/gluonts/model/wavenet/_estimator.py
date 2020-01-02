@@ -230,6 +230,7 @@ class WaveNetEstimator(GluonEstimator):
                     "M": 12,
                     "B": 7 * 5,
                     "min": 24 * 60,
+                    'CBH': 7*5
                 },
             )
             if seasonality is None
