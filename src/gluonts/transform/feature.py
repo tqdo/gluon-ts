@@ -417,7 +417,7 @@ class AddTimeFeatures(MapTransformation):
         )
         self._date_index = pd.Series(
             index=self.full_date_range,
-            data=np.arange(len(self.full_date_range)),
+            data=np.arange(len(self.full_date_range)), #abc
         )
 
     def map_transform(self, data: DataEntry, is_train: bool) -> DataEntry:
@@ -426,7 +426,7 @@ class AddTimeFeatures(MapTransformation):
             data[self.target_field], self.pred_length, is_train=is_train
         )
         self._update_cache(start, length)
-        i0 = self._date_index[start]
+        i0 = self._date_index[start]#abc
         features = (
             self._full_range_date_features[..., i0 : i0 + length]
             if self.date_features
