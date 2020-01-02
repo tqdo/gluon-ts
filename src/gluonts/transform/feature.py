@@ -175,8 +175,8 @@ class AddTimeFeatures(MapTransformation):
 #             if self._min_time_point <= start and end <= self._max_time_point:
 #                 return
         
-        if self._min_time_point is None:
-            self._min_time_point = start
+        #if self._min_time_point is None:
+        self._min_time_point = start
             #self._max_time_point = end
 #         self._min_time_point = min(
 #             shift_timestamp(start, -50), self._min_time_point
