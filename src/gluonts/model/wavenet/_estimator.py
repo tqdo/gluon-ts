@@ -94,7 +94,7 @@ def _get_seasonality(freq: str, seasonality_dict: Dict) -> int:
     assert match, "Cannot match freq regex"
     multiple, base_freq = match.groups()
     multiple = int(multiple) if multiple else 1
-    seasonality = seasonality_dict[base_freq]
+    seasonality = 35#seasonality_dict[base_freq]
     if seasonality % multiple != 0:
         logging.warning(
             f"multiple {multiple} does not divide base seasonality {seasonality}."
@@ -221,19 +221,18 @@ class WaveNetEstimator(GluonEstimator):
         self.num_parallel_samples = num_parallel_samples
 
         seasonality = (
-            35
-#             _get_seasonality(
-#                 self.freq,
-#                 {
-#                     "H": 7 * 24,
-#                     "D": 7,
-#                     "W": 52,
-#                     "M": 12,
-#                     "B": 7 * 5,
-#                     "min": 24 * 60,
-#                     "CBH": 7*5
-#                 },
-#             )#a
+            _get_seasonality(
+                self.freq,
+                {
+                    "H": 7 * 24,
+                    "D": 7,
+                    "W": 52,
+                    "M": 12,
+                    "B": 7 * 5,
+                    "min": 24 * 60,
+                    "CBH": 7*5
+                },
+            )#a
             if seasonality is None
             else seasonality
         )
