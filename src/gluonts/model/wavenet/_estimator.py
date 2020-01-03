@@ -89,19 +89,19 @@ class QuantizeScaled(SimpleTransformation):
         return data
 
 
-def _get_seasonality(freq: str, seasonality_dict: Dict) -> int:
-    match = re.match(r"(\d*)(\w+)", freq)
-    assert match, "Cannot match freq regex"
-    multiple, base_freq = match.groups()
-    multiple = int(multiple) if multiple else 1
-    seasonality = 35#seasonality_dict[base_freq]
-    if seasonality % multiple != 0:
-        logging.warning(
-            f"multiple {multiple} does not divide base seasonality {seasonality}."
-            f"Falling back to seasonality 1"
-        )
-        return 1
-    return seasonality // multiple
+# def _get_seasonality(freq: str, seasonality_dict: Dict) -> int:
+#     match = re.match(r"(\d*)(\w+)", freq)
+#     assert match, "Cannot match freq regex"
+#     multiple, base_freq = match.groups()
+#     multiple = int(multiple) if multiple else 1
+#     seasonality = 35#seasonality_dict[base_freq]
+#     if seasonality % multiple != 0:
+#         logging.warning(
+#             f"multiple {multiple} does not divide base seasonality {seasonality}."
+#             f"Falling back to seasonality 1"
+#         )
+#         return 1
+#     return seasonality // multiple
 
 
 class WaveNetEstimator(GluonEstimator):
