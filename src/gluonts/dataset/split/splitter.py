@@ -293,7 +293,7 @@ class TimeSeriesSlice(pydantic.BaseModel):
          '2020-12-25']
         
         index = pd.date_range(
-            start=item.start, freq=pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE), end=item.start+(len(item.target)/7-1)*pd.offsets.CustomBusinessDay(hlidays=holidays_NYSE)+pd.offsets.Hour(6)
+            start=item.start, freq=pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE), end=item.start+(len(item.target)/7-1)*pd.offsets.CustomBusinessDay(holidays=holidays_NYSE)+pd.offsets.Hour(6)
         )
 
         feat_dynamic_cat = [
