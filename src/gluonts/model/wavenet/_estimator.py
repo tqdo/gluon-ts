@@ -221,18 +221,19 @@ class WaveNetEstimator(GluonEstimator):
         self.num_parallel_samples = num_parallel_samples
 
         seasonality = (
-            _get_seasonality(
-                self.freq,
-                {
-                    "H": 7 * 24,
-                    "D": 7,
-                    "W": 52,
-                    "M": 12,
-                    "B": 7 * 5,
-                    "min": 24 * 60,
-                    "CBH": 7*5
-                },
-            )#a
+            35
+#             _get_seasonality(
+#                 self.freq,
+#                 {
+#                     "H": 7 * 24,
+#                     "D": 7,
+#                     "W": 52,
+#                     "M": 12,
+#                     "B": 7 * 5,
+#                     "min": 24 * 60,
+#                     "CBH": 7*5
+#                 },
+#             )#a
             if seasonality is None
             else seasonality
         )
