@@ -219,23 +219,31 @@ class WaveNetEstimator(GluonEstimator):
         self.temperature = temperature
         self.act_type = act_type
         self.num_parallel_samples = num_parallel_samples
-
-        seasonality = (
-            _get_seasonality(
-                self.freq,
-                {
-                    "H": 7 * 24,
-                    "D": 7,
-                    "W": 52,
-                    "M": 12,
-                    "B": 7 * 5,
-                    "min": 24 * 60,
-                    "CBH": 7*5
-                },
-            )#a
-            if seasonality is None
-            else seasonality
-        )
+        
+        if not seasonality:
+            match = re.match(r"(\d*)(\w+)", self.freq)
+            multiple, base_freq = match.groups()
+            multiple = int(multiple) if multiple else 1
+            seasonality = 35
+            if seasonality % multiple != 0: seasonality=1
+            else: seasonality = seasonality//multiple
+#         seasonality = (
+            
+#             _get_seasonality(
+#                 self.freq,
+#                 {
+#                     "H": 7 * 24,
+#                     "D": 7,
+#                     "W": 52,
+#                     "M": 12,
+#                     "B": 7 * 5,
+#                     "min": 24 * 60,
+#                     "CBH": 7*5
+#                 },
+#             )#a
+#             if seasonality is None
+#             else seasonality
+#         )
 
         goal_receptive_length = max(
             2 * seasonality, 2 * self.prediction_length
