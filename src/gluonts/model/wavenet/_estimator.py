@@ -89,19 +89,19 @@ class QuantizeScaled(SimpleTransformation):
         return data
 
 
-# def _get_seasonality(freq: str, seasonality_dict: Dict) -> int:
-#     match = re.match(r"(\d*)(\w+)", freq)
-#     assert match, "Cannot match freq regex"
-#     multiple, base_freq = match.groups()
-#     multiple = int(multiple) if multiple else 1
-#     seasonality = 35#seasonality_dict[base_freq]
-#     if seasonality % multiple != 0:
-#         logging.warning(
-#             f"multiple {multiple} does not divide base seasonality {seasonality}."
-#             f"Falling back to seasonality 1"
-#         )
-#         return 1
-#     return seasonality // multiple
+def _get_seasonality(freq: str, seasonality_dict: Dict) -> int:
+    match = re.match(r"(\d*)(\w+)", freq)
+    assert match, "Cannot match freq regex"
+    multiple, base_freq = match.groups()
+    multiple = int(multiple) if multiple else 1
+    seasonality = 35#seasonality_dict[base_freq]
+    if seasonality % multiple != 0:
+        logging.warning(
+            f"multiple {multiple} does not divide base seasonality {seasonality}."
+            f"Falling back to seasonality 1"
+        )
+        return 1
+    return seasonality // multiple
 
 
 class WaveNetEstimator(GluonEstimator):
@@ -220,30 +220,30 @@ class WaveNetEstimator(GluonEstimator):
         self.act_type = act_type
         self.num_parallel_samples = num_parallel_samples
         
-        if not seasonality:
-            match = re.match(r"(\d*)(\w+)", self.freq)
-            multiple, base_freq = match.groups()
-            multiple = int(multiple) if multiple else 1
-            seasonality = 35
-            if seasonality % multiple != 0: seasonality=1
-            else: seasonality = seasonality//multiple
-#         seasonality = (
+#         if not seasonality:
+#             match = re.match(r"(\d*)(\w+)", self.freq)
+#             multiple, base_freq = match.groups()
+#             multiple = int(multiple) if multiple else 1
+#             seasonality = 35
+#             if seasonality % multiple != 0: seasonality=1
+#             else: seasonality = seasonality//multiple
+        seasonality = (
             
-#             _get_seasonality(
-#                 self.freq,
-#                 {
-#                     "H": 7 * 24,
-#                     "D": 7,
-#                     "W": 52,
-#                     "M": 12,
-#                     "B": 7 * 5,
-#                     "min": 24 * 60,
-#                     "CBH": 7*5
-#                 },
-#             )#a
-#             if seasonality is None
-#             else seasonality
-#         )
+            _get_seasonality(
+                self.freq,
+                {
+                    "H": 7 * 24,
+                    "D": 7,
+                    "W": 52,
+                    "M": 12,
+                    "B": 7 * 5,
+                    "min": 24 * 60,
+                    "CBH": 7*5
+                },
+            )#a
+            if seasonality is None
+            else seasonality
+        )
 
         goal_receptive_length = max(
             2 * seasonality, 2 * self.prediction_length
