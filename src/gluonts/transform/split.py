@@ -270,7 +270,8 @@ def _shift_timestamp_helper(
          '2020-11-26',
          '2020-12-25']
         #if not ts.freq: 
-        return ts +offset*pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE)
+        #return ts +offset*pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE)
+        return ts + offset/7*pd.offsets.CustomBusinessDay(holidays=holidays_NYSE)
         #return ts + offset * ts.freq
     except (ValueError, pd._libs.OutOfBoundsDatetime) as ex:
         raise GluonTSDateBoundsError(ex)
