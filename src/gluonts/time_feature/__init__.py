@@ -24,7 +24,7 @@ from ._base import (
     time_features_from_frequency_str,
 )
 
-from .holiday import SPECIAL_DATE_FEATURES, SpecialDateFeatureSet
+#from .holiday import SPECIAL_DATE_FEATURES, SpecialDateFeatureSet
 
 from .lag import get_lags_for_frequency
 
