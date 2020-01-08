@@ -460,7 +460,7 @@ class Forecast:
          '2020-11-26',
          '2020-12-25']
             self._index = pd.date_range(
-                self.start_date, periods=self.prediction_length, freq=pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE)
+                self.start_date, end=self.start_date +(self.prediction_length/7-1)*pd.offsets.CustomBusinessDay(holidays=holidays_NYSE)+pd.offsets.Hour(6), freq=pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE)
             )
         return self._index
 
