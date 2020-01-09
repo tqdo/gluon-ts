@@ -71,8 +71,8 @@ def make_evaluation_predictions(
             
             index = pd.date_range(
                 start=data["start"],
-                freq=pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE),#freq,
-                periods=data["target"].shape[-1],
+                freq=pd.offsets.CustomBusinessHour(end='16:00',holidays=holidays_NYSE),
+                periods=data["target"].shape[-1]
             )
             data["ts"] = pd.DataFrame(
                 index=index, data=data["target"].transpose()
