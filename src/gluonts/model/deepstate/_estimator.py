@@ -63,6 +63,7 @@ FREQ_LONGEST_PERIOD_DICT = {
     "B": 22,  # monthly seasonality
     "H": 168,  # weekly seasonality
     "T": 1440,  # daily seasonality
+    "CBH":35
 }
 
 
