@@ -300,6 +300,11 @@ class CompositeISSM(ISSM):
                 SeasonalityISSM(num_seasons=24),  # hour-of-day seasonality
                 SeasonalityISSM(num_seasons=7),  # day-of-week seasonality
             ]
+        elif offset.name == "CBH":
+            seasonal_issms = [
+                SeasonalityISSM(num_seasons=7),  # hour-of-day seasonality
+                SeasonalityISSM(num_seasons=5),  # day-of-week seasonality
+            ]
         elif offset.name == "T":
             seasonal_issms = [
                 SeasonalityISSM(num_seasons=60),  # minute-of-hour seasonality
@@ -321,7 +326,7 @@ class CompositeISSM(ISSM):
             return [DayOfWeek(normalized=False)]
         elif offset.name == "B":  # TODO: check this case
             return [DayOfWeek(normalized=False)]
-        elif offset.name == "H":
+        elif offset.name == "H" or offset.name == "CBH":
             return [HourOfDay(normalized=False), DayOfWeek(normalized=False)]
         elif offset.name == "T":
             return [
