@@ -56,7 +56,7 @@ SEASON_INDICATORS_FIELD = "seasonal_indicators"
 # https://stats.stackexchange.com/questions/120806/frequency-value-for-seconds-minutes-intervals-data-in-r
 # This is useful for setting default values for past/context length for models
 # that do not do data augmentation and uses a single training example per time series in the dataset.
-self.FREQ_LONGEST_PERIOD_DICT = {
+FREQ_LONGEST_PERIOD_DICT = {
     "M": 12,  # yearly seasonality
     "W-SUN": 52,  # yearly seasonality
     "D": 31,  # monthly seasonality
@@ -69,7 +69,7 @@ self.FREQ_LONGEST_PERIOD_DICT = {
 
 def longest_period_from_frequency_str(freq_str: str) -> int:
     offset = to_offset(freq_str)#
-    return self.FREQ_LONGEST_PERIOD_DICT[offset.name] // offset.n
+    return FREQ_LONGEST_PERIOD_DICT[offset.name] // offset.n
 
 
 class DeepStateEstimator(GluonEstimator):
